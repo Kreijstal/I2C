@@ -265,8 +265,10 @@ reg cmd_valid_reg = 1'b0, cmd_valid_next;
 wire cmd_ready;
 
 reg [7:0] data_in_reg = 8'd0, data_in_next;
+wire data_in_valid;
 reg data_in_valid_reg = 1'b0, data_in_valid_next;
 wire data_in_ready;
+wire data_in_last;
 reg data_in_last_reg = 1'b0, data_in_last_next;
 
 wire [7:0] data_out;
