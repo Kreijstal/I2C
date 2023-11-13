@@ -68,7 +68,7 @@ individual test scripts can be run with python directly.
 
 ### Testbench Files
 
-    tb/axil.py           : MyHDL AXI4 lite master and memory BFM
-    tb/axis_ep.py        : MyHDL AXI Stream endpoints
-    tb/i2c.py            : MyHDL I2C master and slave models
-    tb/wb.py             : MyHDL Wishbone master model and RAM model
+    verify/utb/axil.py           : MyHDL AXI4 lite master and memory BFM
+    verify/utb/axis_ep.py        : MyHDL AXI Stream endpoints
+    verify/utb/i2c.py            : MyHDL I2C master and slave models
+    verify/utb/wb.py             : MyHDL Wishbone master model and RAM model

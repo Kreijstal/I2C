@@ -1,0 +1,33 @@
+{
+    "info": {
+        "name": "I2C",
+        "description": "Verilog I2C interface for FPGA implementation",
+        "repo": "https://github.com/alexforencich/verilog-i2c",
+        "owner": "Alex Forencich",
+        "license": "MIT",
+        "author": "Alex Forencich",
+        "email": "",
+        "version": "v1.0.0",
+        "date": "7-20-2023",
+        "category": "digital",
+        "tags": [
+            "peripheral",
+            "comm",
+            "i2c"
+        ],
+        "bus": [
+            "generic"
+        ],
+        "type": "soft",
+        "status": "verified",
+        "cell_count": "0",
+        "width": "0.0",
+        "height": "0.0",
+        "technology": "n/a",
+        "clock_freq_mhz": "n/a",
+        "supply_voltage": [
+            "n/a"
+        ]
+    }
+        
+}
