@@ -64,7 +64,10 @@ module i2c_master_wbs_16 #
     output wire        i2c_scl_t,
     input  wire        i2c_sda_i,
     output wire        i2c_sda_o,
-    output wire        i2c_sda_t
+    output wire        i2c_sda_t,
+
+    // MS, Expose the status bits
+    output wire [15:0] flags
 );
 /*
 
@@ -317,6 +320,24 @@ wire read_fifo_full = ~data_out_ready_int;
 reg cmd_fifo_overflow_reg = 1'b0, cmd_fifo_overflow_next;
 reg write_fifo_overflow_reg = 1'b0, write_fifo_overflow_next;
 
+    // MS
+    assign flags[0]  = busy_int;
+    assign flags[1]  = bus_control_int;
+    assign flags[2]  = bus_active_int;
+    assign flags[3]  = missed_ack_reg;
+    assign flags[4]  = 1'b0;
+    assign flags[5]  = 1'b0;
+    assign flags[6]  = 1'b0;
+    assign flags[7]  = 1'b0;
+    assign flags[8]  = cmd_fifo_empty;
+    assign flags[9]  = cmd_fifo_full;
+    assign flags[10] = cmd_fifo_overflow_reg;
+    assign flags[11] = write_fifo_empty;
+    assign flags[12] = write_fifo_full;
+    assign flags[13] = write_fifo_overflow_reg;
+    assign flags[14] = read_fifo_empty;
+    assign flags[15] = read_fifo_full;
+
 generate
 
 if (CMD_FIFO) begin
@@ -335,12 +356,12 @@ if (CMD_FIFO) begin
         .rst(rst),
         // AXI input
         .s_axis_tdata({cmd_address_reg, cmd_start_reg, cmd_read_reg, cmd_write_reg, cmd_write_multiple_reg, cmd_stop_reg}),
-        .s_axis_tkeep(0),
+        .s_axis_tkeep(1'b0),
         .s_axis_tvalid(cmd_valid_reg),
         .s_axis_tready(cmd_ready),
         .s_axis_tlast(1'b0),
-        .s_axis_tid(0),
-        .s_axis_tdest(0),
+        .s_axis_tid(8'b0),
+        .s_axis_tdest(8'b0),
         .s_axis_tuser(1'b0),
         // AXI output
         .m_axis_tdata({cmd_address_int, cmd_start_int, cmd_read_int, cmd_write_int, cmd_write_multiple_int, cmd_stop_int}),
@@ -379,12 +400,12 @@ if (WRITE_FIFO) begin
         .rst(rst),
         // AXI input
         .s_axis_tdata(data_in_reg),
-        .s_axis_tkeep(0),
+        .s_axis_tkeep(1'b0),
         .s_axis_tvalid(data_in_valid_reg),
         .s_axis_tready(data_in_ready),
         .s_axis_tlast(data_in_last_reg),
-        .s_axis_tid(0),
-        .s_axis_tdest(0),
+        .s_axis_tid(8'b0),
+        .s_axis_tdest(8'b0),
         .s_axis_tuser(1'b0),
         // AXI output
         .m_axis_tdata(data_in_int),
@@ -419,13 +440,13 @@ if (READ_FIFO) begin
         .rst(rst),
         // AXI input
         .s_axis_tdata(data_out_int),
-        .s_axis_tkeep(0),
+        .s_axis_tkeep(1'b0),
         .s_axis_tvalid(data_out_valid_int),
         .s_axis_tready(data_out_ready_int),
         .s_axis_tlast(data_out_last_int),
-        .s_axis_tid(0),
-        .s_axis_tdest(0),
-        .s_axis_tuser(0),
+        .s_axis_tid(8'b0),
+        .s_axis_tdest(8'b0),
+        .s_axis_tuser(1'b0),
         // AXI output
         .m_axis_tdata(data_out),
         .m_axis_tkeep(),
